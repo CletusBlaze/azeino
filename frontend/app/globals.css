@@ -116,17 +116,55 @@ input, textarea {
 
 /* Mobile responsive */
 @media (max-width: 768px) {
+  /* Sidebar */
   .mobile-menu-btn { display: flex !important; }
   .sidebar { width: 0 !important; overflow: hidden !important; position: fixed !important; z-index: 100; transition: width 0.25s ease; }
   .sidebar.open { width: 260px !important; box-shadow: 4px 0 24px rgba(0,0,0,0.4); }
+
+  /* App layout */
   .main-content { width: 100% !important; }
-  .page-padding { padding: 24px 16px !important; }
-  .grid-cards { grid-template-columns: 1fr !important; }
+
+  /* App pages — main content padding */
+  .app-main { padding: 24px 16px !important; }
+
+  /* Chat page header — shift right to clear hamburger */
+  .chat-header { padding-left: 52px !important; }
+
+  /* Card grids */
   .stagger-children { grid-template-columns: 1fr 1fr !important; }
+
+  /* Landing nav */
+  .landing-nav { padding: 16px 20px !important; }
+  .landing-nav-links { gap: 8px !important; }
+  .landing-nav-links a { padding: 6px 12px !important; font-size: 13px !important; }
+
+  /* Landing hero */
+  .landing-hero { padding: 80px 20px 60px !important; }
+
+  /* Landing sections */
+  .landing-section { padding: 40px 20px !important; }
+
+  /* Landing CTA */
+  .landing-cta { margin: 0 16px 32px !important; padding: 48px 20px !important; }
+
+  /* Demo chat preview */
+  .demo-preview { padding: 0 20px 60px !important; }
+
+  /* Stats row */
+  .stats-row { gap: 24px !important; }
+
+  /* Settings panel — stack on mobile */
+  .settings-panel { flex-direction: column !important; }
+  .settings-nav { width: 100% !important; border-right: none !important; border-bottom: 1px solid var(--color-border) !important; display: flex !important; overflow-x: auto !important; padding: 4px !important; }
+  .settings-nav button { white-space: nowrap !important; }
 }
+
 @media (max-width: 480px) {
   .stagger-children { grid-template-columns: 1fr !important; }
-  main { padding: 24px 16px !important; }
+  .app-main { padding: 20px 14px !important; }
+  .landing-hero h1 { font-size: 36px !important; }
+  .hero-buttons { flex-direction: column !important; align-items: stretch !important; }
+  .hero-buttons a { text-align: center !important; }
 }
 
 /* Utility classes */

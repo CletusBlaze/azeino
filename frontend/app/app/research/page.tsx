@@ -24,7 +24,7 @@ export default function ResearchPage() {
   return (
     <div style={{ display: 'flex', height: '100vh', background: 'var(--color-bg)' }}>
       <Sidebar />
-      <main style={{ flex: 1, overflowY: 'auto', padding: '48px 40px' }}>
+      <main className="app-main" style={{ flex: 1, overflowY: 'auto', padding: '48px 40px' }}>
         <div style={{ maxWidth: 800, margin: '0 auto' }}>
           <div style={{ marginBottom: 40 }}>
             <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 8 }}>🔎 Research</h1>

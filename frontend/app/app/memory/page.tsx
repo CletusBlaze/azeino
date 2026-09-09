@@ -30,7 +30,7 @@ export default function MemoryPage() {
   return (
     <div style={{ display: 'flex', height: '100vh', background: 'var(--color-bg)' }}>
       <Sidebar />
-      <main style={{ flex: 1, overflowY: 'auto', padding: '48px 40px' }} className="page-enter">
+      <main className="app-main page-enter" style={{ flex: 1, overflowY: 'auto', padding: '48px 40px' }}>
         <div style={{ maxWidth: 640, margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
             <Brain size={22} color="var(--color-primary)" />

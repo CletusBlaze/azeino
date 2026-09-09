@@ -99,7 +99,7 @@ export default function Sidebar() {
 
       <nav style={{ padding: '4px 8px' }}>
         {navItems.map(({ icon: Icon, label, href }) => (
-          <a key={href} href={href} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 10px', borderRadius: 'var(--radius-sm)', color: pathname === href ? 'var(--color-primary)' : 'var(--color-text-muted)', background: pathname === href ? 'rgba(99,102,241,0.1)' : 'transparent', fontSize: 14, textDecoration: 'none', marginBottom: 2 }}>
+          <a key={href} href={href} onClick={() => setMobileOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 10px', borderRadius: 'var(--radius-sm)', color: pathname === href ? 'var(--color-primary)' : 'var(--color-text-muted)', background: pathname === href ? 'rgba(99,102,241,0.1)' : 'transparent', fontSize: 14, textDecoration: 'none', marginBottom: 2 }}>
             <Icon size={16} /> {label}
           </a>
         ))}
@@ -149,7 +149,7 @@ export default function Sidebar() {
       </div>
 
       <div style={{ padding: '8px', borderTop: '1px solid var(--color-border)' }}>
-        <a href="/app/settings" style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 10px', borderRadius: 'var(--radius-sm)', color: 'var(--color-text-muted)', fontSize: 14, textDecoration: 'none', marginBottom: 4 }}>
+        <a href="/app/settings" onClick={() => setMobileOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 10px', borderRadius: 'var(--radius-sm)', color: 'var(--color-text-muted)', fontSize: 14, textDecoration: 'none', marginBottom: 4 }}>
           <Settings size={16} /> Settings
         </a>
         <button onClick={signOut} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '8px 10px', borderRadius: 'var(--radius-sm)', color: 'var(--color-text-muted)', background: 'transparent', border: 'none', cursor: 'pointer', fontSize: 14 }}>

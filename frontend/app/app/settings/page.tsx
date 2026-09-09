@@ -311,10 +311,10 @@ export default function SettingsPage() {
   return (
     <div style={{ display: 'flex', height: '100vh', background: 'var(--color-bg)' }}>
       <Sidebar />
-      <main style={{ flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', overflowY: 'auto', padding: '48px 40px' }}>
-        <div style={{ width: '100%', maxWidth: 680, background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-xl)', overflow: 'hidden', display: 'flex', minHeight: 480 }}>
+      <main className="app-main" style={{ flex: 1, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', overflowY: 'auto', padding: '48px 40px' }}>
+        <div className="settings-panel" style={{ width: '100%', maxWidth: 680, background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-xl)', overflow: 'hidden', display: 'flex', minHeight: 480 }}>
           {/* Left nav */}
-          <div style={{ width: 200, borderRight: '1px solid var(--color-border)', padding: '8px 0', flexShrink: 0 }}>
+          <div className="settings-nav" style={{ width: 200, borderRight: '1px solid var(--color-border)', padding: '8px 0', flexShrink: 0 }}>
             <p style={{ fontSize: 11, fontWeight: 600, color: 'var(--color-text-muted)', padding: '12px 16px 8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Settings</p>
             {TABS.map(({ id, label, icon: Icon }) => (
               <button key={id} onClick={() => setTab(id)}
