@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
   display_name  VARCHAR,
   avatar_url    VARCHAR,
   plan          VARCHAR DEFAULT 'free' CHECK (plan IN ('free', 'plus', 'pro', 'business')),
-  stripe_customer_id VARCHAR,
+  paystack_customer_code VARCHAR,
   created_at    TIMESTAMPTZ DEFAULT NOW(),
   updated_at    TIMESTAMPTZ DEFAULT NOW()
 );

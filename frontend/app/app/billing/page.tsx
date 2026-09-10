@@ -7,11 +7,15 @@ import { useToast } from '../../../src/components/shared/Toast';
 import { Check } from 'lucide-react';
 
 const PLANS = [
-  { id: 'free', label: 'Free', price: 0, messages: 20, features: ['20 messages/month', 'All AI capabilities', 'Memory system', 'File uploads'] },
-  { id: 'plus', label: 'Plus', price: 9, messages: 500, popular: true, features: ['500 messages/month', 'All AI capabilities', 'Memory system', 'File uploads', 'Priority responses'] },
-  { id: 'pro', label: 'Pro', price: 19, messages: 2000, features: ['2,000 messages/month', 'All AI capabilities', 'Memory system', 'File uploads', 'Priority responses', 'API access (soon)'] },
-  { id: 'business', label: 'Business', price: 49, messages: 10000, features: ['10,000 messages/month', 'All AI capabilities', 'Memory system', 'File uploads', 'Priority responses', 'API access (soon)', 'Team seats (soon)'] },
+  { id: 'free',     label: 'Free',     priceNGN: 0,     messages: 20,    features: ['20 messages/month', 'All AI capabilities', 'Memory system', 'File uploads'] },
+  { id: 'plus',     label: 'Plus',     priceNGN: 4000,  messages: 500,   popular: true, features: ['500 messages/month', 'All AI capabilities', 'Memory system', 'File uploads', 'Priority responses'] },
+  { id: 'pro',      label: 'Pro',      priceNGN: 8000,  messages: 2000,  features: ['2,000 messages/month', 'All AI capabilities', 'Memory system', 'File uploads', 'Priority responses', 'API access (soon)'] },
+  { id: 'business', label: 'Business', priceNGN: 20000, messages: 10000, features: ['10,000 messages/month', 'All AI capabilities', 'Memory system', 'File uploads', 'Priority responses', 'API access (soon)', 'Team seats (soon)'] },
 ];
+
+function formatNGN(amount: number) {
+  return `₦${amount.toLocaleString('en-NG')}`;
+}
 
 function BillingContent() {
   const searchParams = useSearchParams();
@@ -34,15 +38,6 @@ function BillingContent() {
     } catch {
       show('Failed to start checkout', 'error');
       setCheckingOut(null);
-    }
-  };
-
-  const handlePortal = async () => {
-    try {
-      const { url } = await api.openBillingPortal();
-      window.location.href = url;
-    } catch {
-      show('No active subscription found', 'error');
     }
   };
 
@@ -73,11 +68,6 @@ function BillingContent() {
             <div style={{ height: 8, background: 'var(--color-surface-2)', borderRadius: 4, overflow: 'hidden' }}>
               <div style={{ height: '100%', width: `${usedPct}%`, background: barColor, borderRadius: 4, transition: 'width 0.4s ease' }} />
             </div>
-            {planData.plan !== 'free' && (
-              <button onClick={handlePortal} style={{ marginTop: 16, fontSize: 13, color: 'var(--color-primary)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
-                Manage subscription →
-              </button>
-            )}
           </div>
         )}
 
@@ -93,8 +83,8 @@ function BillingContent() {
                 )}
                 <p style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}>{plan.label}</p>
                 <p style={{ fontSize: 28, fontWeight: 800, color: 'var(--color-primary)', marginBottom: 4 }}>
-                  {plan.price === 0 ? 'Free' : `$${plan.price}`}
-                  {plan.price > 0 && <span style={{ fontSize: 13, fontWeight: 400, color: 'var(--color-text-muted)' }}>/mo</span>}
+                  {plan.priceNGN === 0 ? 'Free' : formatNGN(plan.priceNGN)}
+                  {plan.priceNGN > 0 && <span style={{ fontSize: 13, fontWeight: 400, color: 'var(--color-text-muted)' }}>/mo</span>}
                 </p>
                 <p style={{ fontSize: 12, color: 'var(--color-text-muted)', marginBottom: 20 }}>{plan.messages.toLocaleString()} messages/month</p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 24 }}>
@@ -106,7 +96,7 @@ function BillingContent() {
                 </div>
                 <button
                   onClick={() => handleUpgrade(plan.id)}
-                  disabled={isCurrent || plan.id === 'free' || checkingOut === plan.id}
+                  disabled={isCurrent || plan.id === 'free' || !!checkingOut}
                   style={{ width: '100%', padding: '10px', background: isCurrent ? 'var(--color-surface-2)' : 'var(--color-primary)', color: isCurrent ? 'var(--color-text-muted)' : '#fff', border: 'none', borderRadius: 'var(--radius-md)', fontSize: 13, fontWeight: 600, cursor: isCurrent || plan.id === 'free' ? 'default' : 'pointer', opacity: checkingOut && checkingOut !== plan.id ? 0.5 : 1 }}>
                   {isCurrent ? 'Current Plan' : checkingOut === plan.id ? 'Loading...' : plan.id === 'free' ? 'Free Forever' : `Upgrade to ${plan.label}`}
                 </button>
@@ -116,7 +106,7 @@ function BillingContent() {
         </div>
 
         <p style={{ fontSize: 12, color: 'var(--color-text-muted)', marginTop: 24, textAlign: 'center' }}>
-          Payments powered by Stripe · Cancel anytime · No hidden fees
+          Payments powered by Paystack · Supports cards, bank transfer & USSD · Cancel anytime
         </p>
       </div>
     </main>
