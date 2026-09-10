@@ -1,4 +1,4 @@
-import { callGemini } from '../ai/adapters/gemini.js';
+import { generateText } from '../ai/adapters/gemini.js';
 import { sendPushToUser } from '../../routes/push.js';
 import { query } from '../../config/database.js';
 
@@ -18,21 +18,20 @@ Always respond with valid JSON only.`;
 
 const TOOLS = {
   search: async (input) => {
-    const { callGeminiSearch } = await import('../ai/adapters/gemini.js');
-    const result = await callGeminiSearch(input, []);
-    return result.content.slice(0, 500);
+    const { text } = await generateText({ messages: [{ role: 'user', content: input }], useSearch: true });
+    return text.slice(0, 500);
   },
   analyze: async (input) => {
-    const result = await callGemini(`Analyze this concisely: ${input}`, [], 'gemini-2.0-flash');
-    return result.slice(0, 500);
+    const { text } = await generateText({ messages: [{ role: 'user', content: `Analyze this concisely: ${input}` }] });
+    return text.slice(0, 500);
   },
   write: async (input) => {
-    const result = await callGemini(`Write this: ${input}`, [], 'gemini-2.0-flash');
-    return result.slice(0, 800);
+    const { text } = await generateText({ messages: [{ role: 'user', content: `Write this: ${input}` }] });
+    return text.slice(0, 800);
   },
   summarize: async (input) => {
-    const result = await callGemini(`Summarize concisely: ${input}`, [], 'gemini-2.0-flash');
-    return result.slice(0, 400);
+    const { text } = await generateText({ messages: [{ role: 'user', content: `Summarize concisely: ${input}` }] });
+    return text.slice(0, 400);
   },
 };
 
@@ -46,7 +45,7 @@ export async function runAgent(agentRunId, userId, task, conversationId) {
   try {
     for (let i = 0; i < MAX_STEPS; i++) {
       const prompt = `${context}Steps so far: ${steps.length}\nWhat is your next step? Respond with JSON only.`;
-      const raw = await callGemini(prompt, [{ role: 'user', content: AGENT_SYSTEM_PROMPT }], 'gemini-2.0-flash');
+      const { text: raw } = await generateText({ messages: [{ role: 'system', content: AGENT_SYSTEM_PROMPT }, { role: 'user', content: prompt }] });
 
       let step;
       try {
