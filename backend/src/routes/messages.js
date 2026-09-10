@@ -2,9 +2,10 @@ import { authenticate } from '../middleware/auth.js';
 import { query } from '../config/database.js';
 import { orchestrate } from '../services/orchestrator/index.js';
 import { extractAndSaveMemory, loadMemoryContext } from '../services/memory/index.js';
+import { checkUsageLimit } from '../middleware/usageLimit.js';
 
 export default async function messageRoutes(app) {
-  app.post('/:conversationId/messages', { preHandler: authenticate }, async (request, reply) => {
+  app.post('/:conversationId/messages', { preHandler: [authenticate, checkUsageLimit] }, async (request, reply) => {
     const { conversationId } = request.params;
     const { message, fileId, contextHint, personalization } = request.body;
 

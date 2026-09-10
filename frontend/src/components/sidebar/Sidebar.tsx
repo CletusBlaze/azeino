@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import Logo from '../../components/shared/Logo';
 import { useRouter, usePathname } from 'next/navigation';
-import { MessageSquare, Plus, Compass, BookOpen, FileText, Image, Search, FolderOpen, Brain, Lightbulb, Code2, Settings, LogOut, MoreHorizontal, Pencil, Trash2, Sun, Moon } from 'lucide-react';
+import { MessageSquare, Plus, Compass, BookOpen, FileText, Image, Search, FolderOpen, Brain, Lightbulb, Code2, Settings, LogOut, MoreHorizontal, Pencil, Trash2, Sun, Moon, Zap } from 'lucide-react';
 import { useChatStore } from '../../store/chatStore';
 import { useAuthStore } from '../../store/authStore';
 
@@ -71,6 +71,7 @@ export default function Sidebar() {
     { icon: Image, label: 'Images', href: '/app/images' },
     { icon: Brain, label: 'Memory', href: '/app/memory' },
     { icon: FolderOpen, label: 'Files', href: '/app/files' },
+    { icon: Zap, label: 'Billing', href: '/app/billing' },
   ];
 
   return (

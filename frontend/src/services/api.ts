@@ -55,4 +55,9 @@ export const api = {
 
   // Images
   getImages: () => request('/api/images'),
+
+  // Billing
+  getBillingPlan: () => request('/api/billing/plan'),
+  createCheckout: (plan: string) => request('/api/billing/checkout', { method: 'POST', body: JSON.stringify({ plan }) }),
+  openBillingPortal: () => request('/api/billing/portal', { method: 'POST', body: JSON.stringify({}) }),
 };
