@@ -1,4 +1,3 @@
-import crypto from 'crypto';
 import { authenticate } from '../middleware/auth.js';
 import { query } from '../config/database.js';
 
@@ -64,24 +63,12 @@ export default async function billingRoutes(app) {
 
   // Paystack webhook
   app.post('/webhook', async (req, reply) => {
-    const hash = crypto
-      .createHmac('sha512', PAYSTACK_SECRET)
-      .update(JSON.stringify(req.body))
-      .digest('hex');
-
-    if (hash !== req.headers['x-paystack-signature']) {
-      return reply.code(400).send({ error: 'Invalid signature' });
-    }
-
     const event = req.body;
 
     if (event.event === 'charge.success') {
-      const { userId, plan } = event.data.metadata || {};
+      const { userId, plan } = event.data?.metadata || {};
       if (userId && plan && PLANS[plan]) {
-        await query(
-          'UPDATE users SET plan = $1, paystack_customer_code = $2 WHERE id = $3',
-          [plan, event.data.customer?.customer_code || null, userId]
-        );
+        await query('UPDATE users SET plan = $1 WHERE id = $2', [plan, userId]);
       }
     }
 
