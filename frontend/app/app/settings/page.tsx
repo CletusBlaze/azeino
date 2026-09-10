@@ -5,9 +5,10 @@ import { useAuthStore } from '../../../src/store/authStore';
 import { useChatStore } from '../../../src/store/chatStore';
 import { createClient } from '../../../src/lib/supabase';
 import { api } from '../../../src/services/api';
-import { User, Palette, Brain, Shield, ChevronRight, Sparkles, BarChart2 } from 'lucide-react';
+import { User, Palette, Brain, Shield, ChevronRight, Sparkles, BarChart2, Bell } from 'lucide-react';
 import Modal from '../../../src/components/shared/Modal';
 import { useToast } from '../../../src/components/shared/Toast';
+import { usePush } from '../../../src/hooks/usePush';
 
 const TABS = [
   { id: 'general', label: 'General', icon: Palette },
@@ -73,6 +74,7 @@ export default function SettingsPage() {
   const [personSaved, setPersonSaved] = useState(false);
 
   const { show } = useToast();
+  const { supported: pushSupported, subscribed: pushSubscribed, loading: pushLoading, subscribe: pushSubscribe, unsubscribe: pushUnsubscribe } = usePush();
   const [clearMemoryModal, setClearMemoryModal] = useState(false);
   const [clearChatsModal, setClearChatsModal] = useState(false);
   const [clearingMemory, setClearingMemory] = useState(false);
@@ -263,6 +265,16 @@ export default function SettingsPage() {
             Clear
           </button>
         </Row>
+        {pushSupported && (
+          <Row label="Push Notifications" desc="Get notified when AI finishes a long response">
+            <button
+              onClick={pushSubscribed ? pushUnsubscribe : pushSubscribe}
+              disabled={pushLoading}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '7px 14px', background: pushSubscribed ? 'var(--color-surface-2)' : 'var(--color-primary)', color: pushSubscribed ? 'var(--color-text-muted)' : '#fff', border: `1px solid ${pushSubscribed ? 'var(--color-border)' : 'var(--color-primary)'}`, borderRadius: 'var(--radius-md)', fontSize: 13, cursor: 'pointer', opacity: pushLoading ? 0.6 : 1 }}>
+              <Bell size={13} /> {pushLoading ? 'Loading...' : pushSubscribed ? 'Disable' : 'Enable'}
+            </button>
+          </Row>
+        )}
       </>
     ),
     usage: (

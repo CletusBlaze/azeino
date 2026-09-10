@@ -3,6 +3,7 @@ import { query } from '../config/database.js';
 import { orchestrate } from '../services/orchestrator/index.js';
 import { extractAndSaveMemory, loadMemoryContext } from '../services/memory/index.js';
 import { checkUsageLimit } from '../middleware/usageLimit.js';
+import { sendPushToUser } from './push.js';
 
 export default async function messageRoutes(app) {
   app.post('/:conversationId/messages', { preHandler: [authenticate, checkUsageLimit] }, async (request, reply) => {
@@ -64,6 +65,9 @@ export default async function messageRoutes(app) {
 
     // Extract and save memory in background
     extractAndSaveMemory(request.user.id, message, result.content);
+
+    // Send push notification if user is not on the page (best-effort)
+    sendPushToUser(request.user.id, 'AZEINO', result.content.slice(0, 80) + '...', `/app/chat/${conversationId}`).catch(() => {});
 
     // Log usage
     query(

@@ -12,6 +12,8 @@ import memoryRoutes from './routes/memory.js';
 import usageRoutes from './routes/usage.js';
 import imageRoutes from './routes/images.js';
 import billingRoutes from './routes/billing.js';
+import pushRoutes from './routes/push.js';
+import agentRoutes from './routes/agents.js';
 
 const app = Fastify({ logger: true });
 
@@ -37,6 +39,8 @@ app.register(memoryRoutes, { prefix: '/api/memory' });
 app.register(usageRoutes, { prefix: '/api/usage' });
 app.register(imageRoutes, { prefix: '/api/images' });
 app.register(billingRoutes, { prefix: '/api/billing' });
+app.register(pushRoutes, { prefix: '/api/push' });
+app.register(agentRoutes, { prefix: '/api/agents' });
 
 app.get('/health', async () => ({ status: 'ok' }));
 

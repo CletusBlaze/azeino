@@ -60,4 +60,14 @@ export const api = {
   getBillingPlan: () => request('/api/billing/plan'),
   createCheckout: (plan: string) => request('/api/billing/checkout', { method: 'POST', body: JSON.stringify({ plan }) }),
   openBillingPortal: () => request('/api/billing/portal', { method: 'POST', body: JSON.stringify({}) }),
+
+  // Push notifications
+  getVapidKey: () => request('/api/push/vapid-key'),
+  subscribePush: (subscription: object) => request('/api/push/subscribe', { method: 'POST', body: JSON.stringify({ subscription }) }),
+  unsubscribePush: () => request('/api/push/subscribe', { method: 'DELETE' }),
+
+  // Agents
+  getAgentRuns: () => request('/api/agents'),
+  createAgentRun: (task: string) => request('/api/agents', { method: 'POST', body: JSON.stringify({ task }) }),
+  deleteAgentRun: (id: string) => request(`/api/agents/${id}`, { method: 'DELETE' }),
 };

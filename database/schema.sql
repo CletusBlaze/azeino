@@ -82,6 +82,28 @@ CREATE TABLE IF NOT EXISTS usage_logs (
   created_at    TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Agent Runs
+CREATE TABLE IF NOT EXISTS agent_runs (
+  id            UUID PRIMARY KEY,
+  user_id       UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  task          TEXT NOT NULL,
+  status        VARCHAR DEFAULT 'pending' CHECK (status IN ('pending', 'running', 'completed', 'failed')),
+  steps         JSONB DEFAULT '[]',
+  result        TEXT,
+  created_at    TIMESTAMPTZ DEFAULT NOW(),
+  completed_at  TIMESTAMPTZ
+);
+
+-- Push Subscriptions
+CREATE TABLE IF NOT EXISTS push_subscriptions (
+  id            UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id       UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  subscription  TEXT NOT NULL,
+  created_at    TIMESTAMPTZ DEFAULT NOW(),
+  updated_at    TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE(user_id)
+);
+
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_conversations_user_id ON conversations(user_id);
 CREATE INDEX IF NOT EXISTS idx_messages_conversation_id ON messages(conversation_id);
