@@ -2,7 +2,7 @@
   "name": "AZEINO",
   "short_name": "AZEINO",
   "description": "One AI for almost everything",
-  "start_url": "/app/explore",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#070B14",
   "theme_color": "#6366F1",

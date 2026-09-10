@@ -1,19 +1,32 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Logo from '../../../src/components/shared/Logo';
 import { createClient } from '../../../src/lib/supabase';
+import { useAuthStore } from '../../../src/store/authStore';
 import { Eye, EyeOff } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
+  const { user, init } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPw, setShowPw] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    init().then(() => {
+      const { user } = useAuthStore.getState();
+      if (user) router.replace('/app/explore');
+    });
+  }, []);
+
+  useEffect(() => {
+    if (user) router.replace('/app/explore');
+  }, [user]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

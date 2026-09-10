@@ -26,6 +26,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     await supabase.auth.signOut();
     localStorage.removeItem('access_token');
     set({ user: null });
+    window.location.href = '/';
   },
 
   init: async () => {

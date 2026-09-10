@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Logo from '../src/components/shared/Logo';
+import LandingRedirect from '../src/components/shared/LandingRedirect';
 
 const capabilities = [
   { icon: '🔎', title: 'Web Research', desc: 'Current information with source citations' },
@@ -21,6 +22,7 @@ const stats = [
 export default function LandingPage() {
   return (
     <div style={{ minHeight: '100vh', color: 'var(--color-text)' }}>
+      <LandingRedirect />
       {/* Nav */}
       <nav className="landing-nav" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 48px', borderBottom: '1px solid var(--color-border)', position: 'sticky', top: 0, background: 'rgba(7,11,20,0.7)', backdropFilter: 'blur(16px)', zIndex: 10 }}>
         <Link href="/" style={{ textDecoration: 'none' }}><Logo size={30} /></Link>
