@@ -6,6 +6,22 @@ import ErrorBoundary from '../src/components/shared/ErrorBoundary';
 export const metadata: Metadata = {
   title: 'AZEINO',
   description: 'One AI for almost everything.',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'AZEINO',
+  },
+  other: {
+    'mobile-web-app-capable': 'yes',
+  },
+};
+
+export const viewport = {
+  themeColor: '#6366F1',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
