@@ -7,14 +7,18 @@ import { useToast } from '../../../src/components/shared/Toast';
 import { Check } from 'lucide-react';
 
 const PLANS = [
-  { id: 'free',     label: 'Free',     priceNGN: 0,     messages: 20,    features: ['20 messages/month', 'All AI capabilities', 'Memory system', 'File uploads'] },
-  { id: 'plus',     label: 'Plus',     priceNGN: 4000,  messages: 500,   popular: true, features: ['500 messages/month', 'All AI capabilities', 'Memory system', 'File uploads', 'Priority responses'] },
-  { id: 'pro',      label: 'Pro',      priceNGN: 8000,  messages: 2000,  features: ['2,000 messages/month', 'All AI capabilities', 'Memory system', 'File uploads', 'Priority responses', 'API access (soon)'] },
-  { id: 'business', label: 'Business', priceNGN: 20000, messages: 10000, features: ['10,000 messages/month', 'All AI capabilities', 'Memory system', 'File uploads', 'Priority responses', 'API access (soon)', 'Team seats (soon)'] },
+  { id: 'free',     label: 'Free',     priceNGN: 0,     priceUSD: 0,  messages: 20,    features: ['20 messages/month', 'All AI capabilities', 'Memory system', 'File uploads'] },
+  { id: 'plus',     label: 'Plus',     priceNGN: 4000,  priceUSD: 3,  messages: 500,   popular: true, features: ['500 messages/month', 'All AI capabilities', 'Memory system', 'File uploads', 'Priority responses'] },
+  { id: 'pro',      label: 'Pro',      priceNGN: 8000,  priceUSD: 5,  messages: 2000,  features: ['2,000 messages/month', 'All AI capabilities', 'Memory system', 'File uploads', 'Priority responses', 'API access (soon)'] },
+  { id: 'business', label: 'Business', priceNGN: 20000, priceUSD: 13, messages: 10000, features: ['10,000 messages/month', 'All AI capabilities', 'Memory system', 'File uploads', 'Priority responses', 'API access (soon)', 'Team seats (soon)'] },
 ];
 
 function formatNGN(amount: number) {
   return `₦${amount.toLocaleString('en-NG')}`;
+}
+
+function formatUSD(amount: number) {
+  return `$${amount}`;
 }
 
 function BillingContent() {
@@ -82,10 +86,15 @@ function BillingContent() {
                   </div>
                 )}
                 <p style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}>{plan.label}</p>
-                <p style={{ fontSize: 28, fontWeight: 800, color: 'var(--color-primary)', marginBottom: 4 }}>
+                <p style={{ fontSize: 28, fontWeight: 800, color: 'var(--color-primary)', marginBottom: 2 }}>
                   {plan.priceNGN === 0 ? 'Free' : formatNGN(plan.priceNGN)}
                   {plan.priceNGN > 0 && <span style={{ fontSize: 13, fontWeight: 400, color: 'var(--color-text-muted)' }}>/mo</span>}
                 </p>
+                {plan.priceUSD > 0 && (
+                  <p style={{ fontSize: 12, color: 'var(--color-text-muted)', marginBottom: 16 }}>
+                    ~{formatUSD(plan.priceUSD)}/mo for international cards
+                  </p>
+                )}
                 <p style={{ fontSize: 12, color: 'var(--color-text-muted)', marginBottom: 20 }}>{plan.messages.toLocaleString()} messages/month</p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 24 }}>
                   {plan.features.map((f) => (
@@ -106,7 +115,7 @@ function BillingContent() {
         </div>
 
         <p style={{ fontSize: 12, color: 'var(--color-text-muted)', marginTop: 24, textAlign: 'center' }}>
-          Payments powered by Paystack · Supports cards, bank transfer & USSD · Cancel anytime
+          Payments powered by Paystack · Supports NGN, USD, GBP & more · Cancel anytime
         </p>
       </div>
     </main>
